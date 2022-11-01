@@ -9,15 +9,13 @@
 
     <TextView
         android:id="@+id/tv_todoname"
-        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/black"
         android:text="과제"
-        app:layout_constraintBottom_toTopOf="@+id/tv_todoDate"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,13 +23,12 @@
         android:id="@+id/tv_todoDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
         android:text="11/01"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_todoname"
-        app:layout_constraintTop_toBottomOf="@+id/tv_todoname" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_catalog"
+        app:layout_constraintStart_toStartOf="@+id/ibtn_modify"
+        app:layout_constraintTop_toTopOf="@+id/tv_catalog" />
 
     <ImageButton
         android:id="@+id/ibtn_modify"
@@ -56,5 +53,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_catalog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tv_todoname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_todoname" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

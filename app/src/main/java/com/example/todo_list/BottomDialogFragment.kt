@@ -56,6 +56,7 @@ class BottomDialogFragment() :
                 var todo = view.findViewById<EditText>(R.id.et_catalog).text.toString()
                 Log.d("로그","카탈로그 : $catalog 할 일 : $todo")
                 dataPassListener.onDataPass(catalog, todo)
+                dialog?.dismiss()
             }
 
         }
