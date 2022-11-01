@@ -10,5 +10,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val lgbinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(lgbinding.root)
+
+        lgbinding.btnLglogin.setOnClickListener {
+            val intent = Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

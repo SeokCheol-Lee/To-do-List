@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="24dp"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="56dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <EditText
+        android:id="@+id/et_catalog"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:hint="카테고리"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_todo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="할 일"
+        app:layout_constraintStart_toStartOf="@+id/et_catalog"
+        app:layout_constraintTop_toBottomOf="@+id/et_catalog" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="6dp"
+        android:backgroundTint="#808080"
+        android:textColor="@color/white"
+        android:text="등록하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_todo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
