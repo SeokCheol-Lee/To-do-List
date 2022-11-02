@@ -125,11 +125,11 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="36dp"
         android:textColor="@color/black"
         android:text="변경할 비밀번호를 입력해주세요"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_btngroup" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_useremail"
@@ -199,6 +199,69 @@
         android:text="카테고리삭제"
         app:layout_constraintStart_toStartOf="@+id/mu_cate"
         app:layout_constraintTop_toBottomOf="@+id/mu_cate" />
+
+        <ImageButton
+            android:id="@+id/ibtn_userdelte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="121dp"
+            android:layout_marginEnd="48dp"
+            android:background="#00ff0000"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_username"
+            app:layout_constraintTop_toTopOf="@+id/tv_username"
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
+        <LinearLayout
+            android:id="@+id/ll_btngroup"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#808080"
+                android:text="1"
+                android:layout_marginHorizontal="5dp"/>
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#808080"
+                android:text="2"
+                android:layout_marginHorizontal="5dp"/>
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#808080"
+                android:text="3"
+                android:layout_marginHorizontal="5dp"/>
+            <Button
+                android:id="@+id/btn_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#808080"
+                android:text="4"
+                android:layout_marginHorizontal="5dp"/>
+            <Button
+                android:id="@+id/btn_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#808080"
+                android:text="5"
+                android:layout_marginHorizontal="5dp"/>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
