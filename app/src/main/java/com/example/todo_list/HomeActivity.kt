@@ -41,7 +41,10 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
         var TodoService = retrofit.create(ApiInterface::class.java)
+
+        // 서버로부터 데이터 가져오기
         TodoService.getData().enqueue(object : Callback<List<Todo>?>{
             override fun onResponse(call: retrofit2.Call<List<Todo>?>, response: Response<List<Todo>?>) {
                 contentList = (response.body() as ArrayList<Todo>?)!!
@@ -52,7 +55,6 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
                 val lm = LinearLayoutManager(this@HomeActivity)
                 homeBinding.rvTodo.layoutManager = lm
                 homeBinding.rvTodo.setHasFixedSize(true)
-
             }
 
             override fun onFailure(call: retrofit2.Call<List<Todo>?>, t: Throwable) {
@@ -73,11 +75,8 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
                 }
             }
             fun modifyTask(todo: Todo){
-
             }
-
         })
-
     }
 
     override fun onResume() {
@@ -102,7 +101,14 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
 
 
     override fun onDataPass(catalog: String?, todo: String?) {
-        Toast.makeText(this,"카탈로그 : $catalog 할 일 : $todo", Toast.LENGTH_LONG).show()
+        var retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var TodoService = retrofit.create(ApiInterface::class.java)
+
+//        TodoService.requestCreCtg()
+//        Toast.makeText(this,"카탈로그 : $catalog 할 일 : $todo", Toast.LENGTH_LONG).show()
     }
 
 }

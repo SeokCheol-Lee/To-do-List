@@ -12,16 +12,6 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BottomDialogFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BottomDialogFragment() :
 
     BottomSheetDialogFragment() {
@@ -48,16 +38,15 @@ class BottomDialogFragment() :
         super.onCreate(savedInstanceState)
     }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            view.findViewById<Button>(R.id.btn_submit).setOnClickListener {
-                var catalog = view.findViewById<EditText>(R.id.et_catalog).text.toString()
-                var todo = view.findViewById<EditText>(R.id.et_catalog).text.toString()
-                Log.d("로그","카탈로그 : $catalog 할 일 : $todo")
-                dataPassListener.onDataPass(catalog, todo)
-                dialog?.dismiss()
-            }
-
+        view.findViewById<Button>(R.id.btn_submit).setOnClickListener {
+            var catalog = view.findViewById<EditText>(R.id.et_catalog).text.toString()
+            var todo = view.findViewById<EditText>(R.id.et_catalog).text.toString()
+            Log.d("로그","카탈로그 : $catalog 할 일 : $todo")
+            dataPassListener.onDataPass(catalog, todo)
+            dialog?.dismiss()
         }
+    }
 }

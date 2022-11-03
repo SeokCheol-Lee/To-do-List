@@ -1,5 +1,6 @@
 package com.example.todo_list
 
+import com.example.todo_list.model.ServerResponse
 import com.example.todo_list.model.Todo
 import retrofit2.Call
 import retrofit2.http.Field
@@ -105,5 +106,23 @@ public interface ApiInterface {
         @Field("category_title") ctg_title: String,
         @Field("todo_text") todo_text: String,
         @Field("todo_date") todo_date: String,
+    ) : Call<ServerResponse>
+
+    // 12. todo 조회
+    @FormUrlEncoded
+    @POST("/highdb/todo_re")
+    fun requestTodoRe(
+        @Field("email") email: String
+    ) : Call<ServerResponse>
+
+    // 13. 할 일 확인
+    @FormUrlEncoded
+    @POST("/highdb/todo_ch")
+    fun requestTodoCh(
+        @Field("email") email: String,
+        @Field("category_title") ctg_title: String,
+        @Field("todo_date") todo_date: String,
+        @Field("todo_text") todo_text: String,
+        @Field("complete") complete: String
     ) : Call<ServerResponse>
 }
