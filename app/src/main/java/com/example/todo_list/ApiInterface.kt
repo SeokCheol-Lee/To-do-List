@@ -1,6 +1,5 @@
 package com.example.todo_list
 
-import com.example.todo_list.model.ServerResponse
 import com.example.todo_list.model.Todo
 import retrofit2.Call
 import retrofit2.http.Field

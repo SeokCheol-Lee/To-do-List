@@ -5,11 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import com.example.todo_list.databinding.ActivityLoginBinding
-import com.example.todo_list.model.ServerResponse
-import com.example.todo_list.model.Todo
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
