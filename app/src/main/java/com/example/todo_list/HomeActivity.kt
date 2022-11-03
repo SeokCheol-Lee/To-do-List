@@ -14,7 +14,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "http://220.149.244.206:3001/"
+const val BASE_URL = "http://서버주소/"
 
 class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListener {
 
