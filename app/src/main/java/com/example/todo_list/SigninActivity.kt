@@ -41,6 +41,7 @@ class SigninActivity : AppCompatActivity() {
             val uId: String = findViewById<EditText>(R.id.et_siemail).text.toString()
             val uPw: String = findViewById<EditText>(R.id.et_modipw).text.toString()
 
+            // 1. 회원가입
             server.requestSignUp(uName, uId, uPw).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("회원가입 실패", "회원가입 실패")

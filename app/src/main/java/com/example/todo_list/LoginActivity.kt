@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
             val uid: String = findViewById<EditText>(R.id.et_email).text.toString()
             val upw: String = findViewById<EditText>(R.id.et_pw).text.toString()
 
+            // 2. 로그인
             // 서버로 ID & PW 보내기
             server.requestSignIn(uid, upw).enqueue(object : Callback<ServerResponse> {
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
@@ -51,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if (userLogin?.code == 200){
                         Log.d("로그인 성공", "로그인 성공 $uid, $upw")
+//                        UserData.setUserId(this@LoginActivity, uid, upw)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this@LoginActivity, "가입된 계정이 아닙니다!", Toast.LENGTH_LONG).show()

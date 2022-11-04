@@ -7,12 +7,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo_list.databinding.ActivityHomeBinding
+import com.example.todo_list.model.ServerResponse
 import com.example.todo_list.model.Todo
 import com.example.todo_list.recyclerview.TodoRecyclerViewAdapter
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 
 const val BASE_URL = "http://서버주소/"
 
@@ -44,7 +47,7 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
 
         var TodoService = retrofit.create(ApiInterface::class.java)
 
-        // 서버로부터 데이터 가져오기
+        // 서버로부터 데이터 가져오기 <getData와 Todo 수정 필요!!!!!!!!>
         TodoService.getData().enqueue(object : Callback<List<Todo>?>{
             override fun onResponse(call: retrofit2.Call<List<Todo>?>, response: Response<List<Todo>?>) {
                 contentList = (response.body() as ArrayList<Todo>?)!!
@@ -106,6 +109,29 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var TodoService = retrofit.create(ApiInterface::class.java)
+
+        // 사용자의 이메일, 비밀번호 받아오기 <--------------------------------------------------- 여기 Preference 필요 (UserData)
+        val uEmail = "email"
+        val uPw = "pw"
+
+        val onlyDate: LocalDate = LocalDate.now()
+
+        // 9. 할 일 생성
+        TodoService.requestCreTodo(uEmail, catalog.toString(), todo.toString(), onlyDate.toString()).enqueue(object: Callback<ServerResponse>{
+            override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
+                Log.d("카테고리 생성 실패", "서버통신 실패")
+            }
+
+            override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
+                val resultCreTodo = response.body()
+
+                if (resultCreTodo?.code == 200) {
+                    // 있어야 하나???? <---------------------------------------------
+                } else {
+                    Log.d("카테고리 생성 실패", "생성 실패")
+                }
+            }
+        })
 
 //        TodoService.requestCreCtg()
 //        Toast.makeText(this,"카탈로그 : $catalog 할 일 : $todo", Toast.LENGTH_LONG).show()

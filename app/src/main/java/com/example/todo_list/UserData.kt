@@ -10,11 +10,12 @@ object UserData {
         val prefs: SharedPreferences = context. getSharedPreferences(myAccount, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = prefs.edit()
         editor.putString("myId", input)
+        editor.putString("myPw", input)
         editor.commit()
     }
 
     fun getUserId(context: Context): String{
         val prefs: SharedPreferences = context.getSharedPreferences(myAccount, Context.MODE_PRIVATE)
-        return prefs.getString("myId", "").toString()
+        return prefs.getString("myId", "myPw").toString()
     }
 }
