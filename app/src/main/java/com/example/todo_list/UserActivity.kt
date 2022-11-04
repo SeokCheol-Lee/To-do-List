@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import com.example.todo_list.databinding.ActivityUserBinding
+import com.example.todo_list.model.Category
 import com.example.todo_list.model.ServerResponse
+import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +27,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(userbinding.root)
 
         // 서버 연동
-        val url = "서버주소"
+        val url = "http://220.149.244.206:3003/"
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
@@ -34,8 +36,9 @@ class UserActivity : AppCompatActivity() {
 
 
         // 사용자의 이메일, 비밀번호 받아오기 <--------------------------------------------------- 여기 Preference 필요 (UserData)
-        val uEmail = "email"
-        val uPw = "pw"
+        val gemail = intent.getStringExtra("아이디")
+        val uEmail = gemail.toString()
+        val uPw = UserData.getUserPass(this)
 
         var textLayout = userbinding.muCate
         var txitem = userbinding.textItem
@@ -44,7 +47,7 @@ class UserActivity : AppCompatActivity() {
 
         // 4. 회원탈퇴
         userbinding.ibtnUserdelte.setOnClickListener {
-            server.requestWid(uEmail, uPw).enqueue(object: Callback<ServerResponse>{
+            server.requestWid(uEmail).enqueue(object: Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("회원탈퇴 실패", "서버 통신 실패")
                 }
@@ -77,12 +80,10 @@ class UserActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
-                    val intent = Intent(this@UserActivity, LoginActivity::class.java)
                     val resultChgPw = response.body()
-
                     // 비밀번호 변경은 로그인 화면으로 이동
                     if (resultChgPw?.code == 200){
-                        startActivity(intent)
+                        Toast.makeText(this@UserActivity,"비밀번호가 변경되었습니다",Toast.LENGTH_LONG).show()
                     } else {
                         Log.d("비밀번호 변경 실패", "변경 실패")
                     }
@@ -103,45 +104,37 @@ class UserActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
                     // 새로고침 코드 <------------------------------------------------------------ 수정 필요??
-                    val intent = Intent(this@UserActivity, UserActivity::class.java)
                     val resultCreCtg = response.body()
-
                     if(resultCreCtg?.code == 200){
-                        startActivity(intent)
+                        Toast.makeText(this@UserActivity,"[$addCtg]카테고리가 생성되었습니다",Toast.LENGTH_LONG).show()
                     } else {
                         Log.d("카테고리 생성 실패", "생성 실패")
                     }
                 }
             })
         }
-
-        var items = mutableListOf("과제","수업","약속")
-
+        val itemList : ArrayList<String>
         // 6. 카테고리 불어오기
-        server.requestLoadCtg(uEmail).enqueue(object :Callback<ServerResponse>{
-            override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
-                Log.d("카테고리 불러오기 실패", "서버통신 실패")
-            }
 
-            override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
-                // 서버에서 데이터 받아오기 <----------------------------------------------------- 변경 필요
-                val resultLoadCtg = response.body()
+            Log.d("로그","카테고리 리스트 Press")
+            server.requestLoadCtg(uEmail).enqueue(object : Callback<Category>{
+                override fun onResponse(call: Call<Category>, response: Response<Category>) {
+                    val req = response.body()
+                    Log.d("로그","카테고리 리스트 : ${req?.title}")
+                    var itemAdapter : ArrayAdapter<String> = ArrayAdapter(this@UserActivity,R.layout.item_list, req!!.title)
+                    txitem.setAdapter(itemAdapter)
 
-                if(resultLoadCtg?.code == 200){
-                    // 변경 필요 부분! <-------------------------------------------------------
-                    // 서버에서 가져온 카테고리 추가
-                    items.add(resultLoadCtg?.ctg)
                 }
-            }
-        })
 
-        var itemAdapter : ArrayAdapter<String> = ArrayAdapter<String>(this,R.layout.item_list,items)
-        txitem.setAdapter(itemAdapter)
+                override fun onFailure(call: Call<Category>, t: Throwable) {
+                    Log.d("로그","카테고리 불러오기 실패 : ${t.message}")
+                }
+            })
+
 
         // 8. 카테고리 삭제
         userbinding.btnDelcate.setOnClickListener {
             var delcate = txitem.text.toString()
-//            Toast.makeText(this,"$delcate",Toast.LENGTH_LONG).show()
             server.requestDelCtg(uEmail, delcate).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("카테고리 삭제 실패", "서버통신 실패")
@@ -149,15 +142,63 @@ class UserActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
                     // 새로고침 코드 <------------------------------------------------------------ 수정 필요??
-                    val intent = Intent(this@UserActivity, UserActivity::class.java)
                     val resultDelCtg = response.body()
-
                     if(resultDelCtg?.code == 200){
-                        startActivity(intent)
+                        Toast.makeText(this@UserActivity,"[$delcate]카테고리가 삭제되었습니다",Toast.LENGTH_LONG).show()
                     } else {
                         Log.d("카테고리 삭제 실패", "삭제 실패")
                     }
                 }
+            })
+        }
+        userbinding.btn1.setOnClickListener {
+            server.sql1("sql1").enqueue(object : Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                }
+
+            })
+        }
+        userbinding.btn2.setOnClickListener {
+            server.sql2("sql2").enqueue(object : Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                }
+
+            })
+        }
+        userbinding.btn3.setOnClickListener {
+            server.sql3("sql3").enqueue(object : Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                }
+
+            })
+        }
+        userbinding.btn4.setOnClickListener {
+            server.sql1("sql4").enqueue(object : Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                }
+
+            })
+        }
+        userbinding.btn5.setOnClickListener {
+            server.sql1("sql5").enqueue(object : Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                }
+
             })
         }
 

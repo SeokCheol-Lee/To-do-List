@@ -10,40 +10,49 @@
     app:behavior_peekHeight="56dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <EditText
-        android:id="@+id/et_catalog"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:hint="카테고리"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_todo"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mu_modicate"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:textSize="24dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="36dp"
+        android:hint="카테고리를 선택하세요"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/text_item2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/et_moditodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
         android:hint="할 일"
-        app:layout_constraintStart_toStartOf="@+id/et_catalog"
-        app:layout_constraintTop_toBottomOf="@+id/et_catalog" />
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="@+id/mu_modicate"
+        app:layout_constraintTop_toBottomOf="@+id/mu_modicate" />
 
     <Button
-        android:id="@+id/btn_submit"
+        android:id="@+id/btn_modisubmit"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="6dp"
         android:backgroundTint="#808080"
-        android:textColor="@color/white"
         android:text="등록하기"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_todo" />
+        app:layout_constraintTop_toBottomOf="@+id/et_moditodo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

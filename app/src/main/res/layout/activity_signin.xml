@@ -40,6 +40,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_realname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -54,6 +55,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_realemail"
             android:inputType="textWebEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +71,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_realpw"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

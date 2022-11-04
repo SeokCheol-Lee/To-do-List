@@ -22,7 +22,7 @@ class SigninActivity : AppCompatActivity() {
         setContentView(signBinding.root)
 
         // 서버 연동
-        val url = "서버주소"
+        val url = "http://220.149.244.206:3003/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -37,12 +37,12 @@ class SigninActivity : AppCompatActivity() {
             val intent = Intent(this,LoginActivity::class.java)
 
             // 회원가입 시 이름 & ID & PW 받아오기
-            val uName: String = findViewById<EditText>(R.id.et_siname).text.toString()
-            val uId: String = findViewById<EditText>(R.id.et_siemail).text.toString()
-            val uPw: String = findViewById<EditText>(R.id.et_modipw).text.toString()
+            val uName = signBinding.etRealname.text.toString()
+            val uId: String = signBinding.etRealemail.text.toString()
+            val uPw: String = signBinding.etRealpw.text.toString()
 
             // 1. 회원가입
-            server.requestSignUp(uName, uId, uPw).enqueue(object : Callback<ServerResponse>{
+            server.requestSignUp(uId, uName, uPw).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("회원가입 실패", "회원가입 실패")
                     Toast.makeText(this@SigninActivity, "서버 오류! 회원가입 실패", Toast.LENGTH_LONG).show()

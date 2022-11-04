@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(lgBinding.root)
 
         // 서버 연동
-        val url = "서버주소"
+        val url = "http://220.149.244.206:3003/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -30,14 +30,19 @@ class LoginActivity : AppCompatActivity() {
 
         var server = retrofit.create(ApiInterface::class.java)
 
+        lgBinding.btnLglogin.setOnClickListener{
+            val intent = Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
         lgBinding.btnLglogin.setOnClickListener {
             val intent = Intent(this,HomeActivity::class.java)
 
             // 로그인 시 입력하는 이메일 & PW 받아오기
-            val uid: String = findViewById<EditText>(R.id.et_email).text.toString()
-            val upw: String = findViewById<EditText>(R.id.et_pw).text.toString()
+            val uid: String = findViewById<EditText>(R.id.et_realemail2).text.toString()
+            val upw: String = findViewById<EditText>(R.id.et_realpw2).text.toString()
 
             // 2. 로그인
             // 서버로 ID & PW 보내기
@@ -52,7 +57,9 @@ class LoginActivity : AppCompatActivity() {
 
                     if (userLogin?.code == 200){
                         Log.d("로그인 성공", "로그인 성공 $uid, $upw")
-//                        UserData.setUserId(this@LoginActivity, uid, upw)
+                        UserData.setUsermail(this@LoginActivity,uid)
+                        UserData.setUserPass(this@LoginActivity,upw)
+                        intent.putExtra("아이디",uid)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this@LoginActivity, "가입된 계정이 아닙니다!", Toast.LENGTH_LONG).show()

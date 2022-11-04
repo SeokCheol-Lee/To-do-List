@@ -6,9 +6,11 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_todo"
         android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
-        android:background="@drawable/round_rec"
+        android:background="@drawable/to_do_sel"
+        android:elevation="10dp"
         android:layout_height="80dp">
         <TextView
             android:id="@+id/tv_todoname"

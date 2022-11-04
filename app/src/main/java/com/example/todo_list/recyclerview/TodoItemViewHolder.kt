@@ -12,7 +12,7 @@ class TodoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val tododate = itemView.findViewById<TextView>(R.id.tv_todoDate)
 
     fun bindWithView(todoItem : Todo){
-        todo.text = todoItem.todo
+        todo.text = todoItem.text
         tododate.text = todoItem.date
 
     }
