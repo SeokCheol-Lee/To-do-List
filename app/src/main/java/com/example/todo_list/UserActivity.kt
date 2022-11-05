@@ -47,7 +47,7 @@ class UserActivity : AppCompatActivity() {
 
         // 4. 회원탈퇴
         userbinding.ibtnUserdelte.setOnClickListener {
-            server.requestSigndel(uEmail).enqueue(object: Callback<ServerResponse>{
+            server.requestWid(uEmail).enqueue(object: Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("회원탈퇴 실패", "서버 통신 실패")
                 }
@@ -58,9 +58,11 @@ class UserActivity : AppCompatActivity() {
 
                     // 회원탈퇴 시 메인화면으로 이동
                     if (resultDelUser?.code == 200) {
+                        Toast.makeText(this@UserActivity,"회원탈퇴 완료되었습니다",Toast.LENGTH_LONG).show()
                         startActivity(intent)
                     } else {
-                        Log.d("회원탈퇴 실패", "회원탈퇴 실패")
+                        Log.d("회원탈퇴 실패", "$uEmail")
+                        Log.d("회원탈퇴 실패", resultDelUser?.code.toString())
                     }
                 }
             })
@@ -70,9 +72,9 @@ class UserActivity : AppCompatActivity() {
 
         // 3. 비밀번호 변경
         userbinding.btnModipw.setOnClickListener{
-            val originEmail = findViewById<EditText>(R.id.et_useremail).text.toString()
-            val originPw = findViewById<EditText>(R.id.et_conpw).text.toString()
-            val chgPw = findViewById<EditText>(R.id.et_modipw).text.toString()
+            val originEmail = findViewById<EditText>(R.id.et_ruser_email).text.toString()
+            val originPw = findViewById<EditText>(R.id.et_ruser_pw).text.toString()
+            val chgPw = findViewById<EditText>(R.id.et_ruser_modipw).text.toString()
 
             server.requestChgPw(originEmail, originPw, chgPw).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
@@ -84,6 +86,7 @@ class UserActivity : AppCompatActivity() {
                     // 비밀번호 변경은 로그인 화면으로 이동
                     if (resultChgPw?.code == 200){
                         Toast.makeText(this@UserActivity,"비밀번호가 변경되었습니다",Toast.LENGTH_LONG).show()
+                        Log.d("회원탈퇴 실패", resultChgPw?.code.toString())
                     } else {
                         Log.d("비밀번호 변경 실패", "변경 실패")
                     }
@@ -95,7 +98,7 @@ class UserActivity : AppCompatActivity() {
 
         // 5. 카테고리 생성
         userbinding.btnAddcate.setOnClickListener{
-            val addCtg = findViewById<EditText>(R.id.et_addcate).text.toString()
+            val addCtg = findViewById<EditText>(R.id.et_ruser_title).text.toString()
 
             server.requestCreCtg(uEmail, addCtg).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
@@ -113,28 +116,35 @@ class UserActivity : AppCompatActivity() {
                 }
             })
         }
-        val itemList : ArrayList<String>
-        // 6. 카테고리 불어오기
 
-            Log.d("로그","카테고리 리스트 Press")
-            server.requestLoadCtg(uEmail).enqueue(object : Callback<Category>{
-                override fun onResponse(call: Call<Category>, response: Response<Category>) {
-                    val req = response.body()
-                    Log.d("로그","카테고리 리스트 : ${req?.title}")
+
+        // 6. 카테고리 불러오기
+        Log.d("로그","카테고리 리스트 Press")
+        server.requestLoadCtg(uEmail).enqueue(object : Callback<Category>{
+            override fun onResponse(call: Call<Category>, response: Response<Category>) {
+                val req = response.body()
+                Log.d("로그","카테고리 리스트 : ${req?.title}")
+                val itemList = ArrayList<String>()
+                itemList.add("카테고리를 추가하세요")
+                if (req?.title == null){
+                    var itemAdapter : ArrayAdapter<String> = ArrayAdapter(this@UserActivity,R.layout.item_list, itemList)
+                    txitem.setAdapter(itemAdapter)
+                }
+                else{
                     var itemAdapter : ArrayAdapter<String> = ArrayAdapter(this@UserActivity,R.layout.item_list, req!!.title)
                     txitem.setAdapter(itemAdapter)
-
                 }
 
-                override fun onFailure(call: Call<Category>, t: Throwable) {
-                    Log.d("로그","카테고리 불러오기 실패 : ${t.message}")
-                }
-            })
+            }
+            override fun onFailure(call: Call<Category>, t: Throwable) {
+                Log.d("로그","카테고리 불러오기 실패 : ${t.message}")
+            }
+        })
 
 
         // 8. 카테고리 삭제
+        var delcate = txitem.text.toString()
         userbinding.btnDelcate.setOnClickListener {
-            var delcate = txitem.text.toString()
             server.requestDelCtg(uEmail, delcate).enqueue(object : Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("카테고리 삭제 실패", "서버통신 실패")
@@ -146,11 +156,16 @@ class UserActivity : AppCompatActivity() {
                     if(resultDelCtg?.code == 200){
                         Toast.makeText(this@UserActivity,"[$delcate]카테고리가 삭제되었습니다",Toast.LENGTH_LONG).show()
                     } else {
+                        Log.d("회원탈퇴 실패", resultDelCtg?.code.toString())
                         Log.d("카테고리 삭제 실패", "삭제 실패")
                     }
                 }
             })
         }
+
+
+
+        // sql문 보여주기 위한 1/2/3/4/5 버튼 클릭 이벤트
         userbinding.btn1.setOnClickListener {
             server.sql1("sql1").enqueue(object : Callback<JsonElement>{
                 override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {

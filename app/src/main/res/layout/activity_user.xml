@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="전승현"
+        android:text="사용자"
         android:textSize="24dp"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -193,16 +193,16 @@
         app:layout_constraintStart_toStartOf="@+id/et_addcate"
         app:layout_constraintTop_toBottomOf="@+id/et_addcate" />
 
-    <Button
-        android:id="@+id/btn_delcate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="24dp"
-        android:backgroundTint="#808080"
-        android:text="카테고리삭제"
-        app:layout_constraintStart_toStartOf="@+id/mu_cate"
-        app:layout_constraintTop_toBottomOf="@+id/mu_cate" />
+        <Button
+            android:id="@+id/btn_delcate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="24dp"
+            android:backgroundTint="#808080"
+            android:text="카테고리삭제"
+            app:layout_constraintStart_toStartOf="@+id/mu_cate"
+            app:layout_constraintTop_toBottomOf="@+id/mu_cate" />
 
         <ImageButton
             android:id="@+id/ibtn_userdelte"
@@ -216,6 +216,7 @@
             app:layout_constraintStart_toEndOf="@+id/tv_username"
             app:layout_constraintTop_toTopOf="@+id/tv_username"
             app:srcCompat="@drawable/ic_baseline_delete_24" />
+
         <LinearLayout
             android:id="@+id/ll_btngroup"
             android:layout_marginTop="36dp"
