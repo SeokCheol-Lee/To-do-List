@@ -108,6 +108,11 @@ public interface ApiInterface {
         @Field("text") text: String,
         @Field("date") date: String,
     ) : Call<ServerResponse>
+    @FormUrlEncoded
+    @POST("/highdb/sign_del")
+    fun requestSigndel(
+        @Field("email") email: String
+    ) : Call<ServerResponse>
 
     // 12. todo 조회
     @FormUrlEncoded

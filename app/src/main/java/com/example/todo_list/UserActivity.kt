@@ -47,7 +47,7 @@ class UserActivity : AppCompatActivity() {
 
         // 4. 회원탈퇴
         userbinding.ibtnUserdelte.setOnClickListener {
-            server.requestWid(uEmail).enqueue(object: Callback<ServerResponse>{
+            server.requestSigndel(uEmail).enqueue(object: Callback<ServerResponse>{
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("회원탈퇴 실패", "서버 통신 실패")
                 }
