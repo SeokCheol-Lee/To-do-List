@@ -22,7 +22,7 @@ class SigninActivity : AppCompatActivity() {
         setContentView(signBinding.root)
 
         // 서버 연동
-        val url = "http://220.149.244.206:3003/"
+        val url = "서버주소"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
