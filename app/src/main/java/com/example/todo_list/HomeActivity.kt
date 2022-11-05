@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo_list.databinding.ActivityHomeBinding
 import com.example.todo_list.model.ServerResponse
@@ -48,6 +49,7 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
             bottomDialogFragment.show(supportFragmentManager, bottomDialogFragment.tag)
         }
 
+        // 사용자 정보 버튼 클릭 시
         homeBinding.ibtnUser.setOnClickListener {
             val intent = Intent(this,UserActivity::class.java)
             intent.putExtra("아이디",email)
@@ -63,8 +65,15 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
 
         val TodoService = retrofit.create(ApiInterface::class.java)
 
+        // 새로고침 버튼 클릭
+        homeBinding.restartButton.setOnClickListener{
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            intent.putExtra("아이디", email)
+            startActivity(intent)
+        }
 
-        // 서버로부터 데이터 가져오기 <getData와 Todo 수정 필요!!!!!!!!>
+        // 서버로부터 데이터 가져오기
         TodoService.requestTodoRe(email).enqueue(object : Callback<List<Todo>?>{
             override fun onResponse(call: Call<List<Todo>?>, response: Response<List<Todo>?>) {
                 contentList = (response.body() as ArrayList<Todo>?)!!
@@ -174,6 +183,11 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
         Log.d("로그","HomeActivity - onStop")
     }
 
+//    override fun onRestart() {
+//        super.onRestart()
+//
+//    }
+
     override fun onDataPass(catalog: String?, todo: String?) {
         var retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -212,7 +226,5 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
                 }
             }
         })
-
     }
-
 }

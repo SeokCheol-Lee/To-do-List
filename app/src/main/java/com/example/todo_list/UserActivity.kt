@@ -82,11 +82,12 @@ class UserActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
+                    val intent = Intent(this@UserActivity, LoginActivity::class.java)
                     val resultChgPw = response.body()
                     // 비밀번호 변경은 로그인 화면으로 이동
                     if (resultChgPw?.code == 200){
-                        Toast.makeText(this@UserActivity,"비밀번호가 변경되었습니다",Toast.LENGTH_LONG).show()
-                        Log.d("회원탈퇴 실패", resultChgPw?.code.toString())
+                        Toast.makeText(this@UserActivity,"비밀번호가 변경되었습니다.",Toast.LENGTH_LONG).show()
+                        startActivity(intent)
                     } else {
                         Log.d("비밀번호 변경 실패", "변경 실패")
                     }
@@ -101,6 +102,7 @@ class UserActivity : AppCompatActivity() {
             val addCtg = findViewById<EditText>(R.id.et_ruser_title).text.toString()
 
             server.requestCreCtg(uEmail, addCtg).enqueue(object : Callback<ServerResponse>{
+                val intent = Intent(this@UserActivity, UserActivity::class.java)
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("카테고리 생성 실패", "서버통신 실패")
                 }
@@ -109,7 +111,10 @@ class UserActivity : AppCompatActivity() {
                     // 새로고침 코드 <------------------------------------------------------------ 수정 필요??
                     val resultCreCtg = response.body()
                     if(resultCreCtg?.code == 200){
-                        Toast.makeText(this@UserActivity,"[$addCtg]카테고리가 생성되었습니다",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@UserActivity,"[$addCtg] 카테고리가 생성되었습니다",Toast.LENGTH_LONG).show()
+                        finish()
+                        intent.putExtra("아이디", uEmail)
+                        startActivity(intent)
                     } else {
                         Log.d("카테고리 생성 실패", "생성 실패")
                     }
@@ -143,21 +148,26 @@ class UserActivity : AppCompatActivity() {
 
 
         // 8. 카테고리 삭제
-        var delcate = txitem.text.toString()
+
         userbinding.btnDelcate.setOnClickListener {
+            val delcate = txitem.text.toString()
+
             server.requestDelCtg(uEmail, delcate).enqueue(object : Callback<ServerResponse>{
+                val intent = Intent(this@UserActivity, UserActivity::class.java)
+
                 override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
                     Log.d("카테고리 삭제 실패", "서버통신 실패")
                 }
-
                 override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
                     // 새로고침 코드 <------------------------------------------------------------ 수정 필요??
                     val resultDelCtg = response.body()
                     if(resultDelCtg?.code == 200){
                         Toast.makeText(this@UserActivity,"[$delcate]카테고리가 삭제되었습니다",Toast.LENGTH_LONG).show()
+                        finish()
+                        intent.putExtra("아이디", uEmail)
+                        startActivity(intent)
                     } else {
-                        Log.d("회원탈퇴 실패", resultDelCtg?.code.toString())
-                        Log.d("카테고리 삭제 실패", "삭제 실패")
+                        Log.d("카테고리 삭제 실패", "$delcate")
                     }
                 }
             })
@@ -219,7 +229,10 @@ class UserActivity : AppCompatActivity() {
 
         // 돌아가기 버튼 클릭
         userbinding.btnBack.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
             finish()
+            intent.putExtra("아이디", uEmail)
+            startActivity(intent)
         }
 
     }
