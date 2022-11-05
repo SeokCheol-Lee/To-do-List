@@ -125,7 +125,7 @@ class UserActivity : AppCompatActivity() {
                 val req = response.body()
                 Log.d("로그","카테고리 리스트 : ${req?.title}")
                 val itemList = ArrayList<String>()
-                itemList.add("카테고리를 추가하세요")
+                itemList.add("현재 카테고리가 없습니다.")
                 if (req?.title == null){
                     var itemAdapter : ArrayAdapter<String> = ArrayAdapter(this@UserActivity,R.layout.item_list, itemList)
                     txitem.setAdapter(itemAdapter)
