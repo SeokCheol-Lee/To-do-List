@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(lgBinding.root)
 
         // 서버 연동
-        val url = "서버주소"
+        val url = "http://220.149.244.206:3003/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(url)

@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 
-const val BASE_URL = "서버주소"
+const val BASE_URL = "http://220.149.244.206:3003/"
 
 class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListener {
 
@@ -146,6 +146,7 @@ class HomeActivity : AppCompatActivity(), BottomDialogFragment.OnDataPassListene
             }
             fun onClickTodo(todo: Todo){
                 todo.completed = 1
+                Log.d("클릭 확인","$email,${todo.title},${todo.text},${todo.date},${todo.completed}")
 
                 TodoService.requestTodoCh(email,todo.title,todo.text,todo.date,todo.completed).enqueue(object : Callback<ServerResponse>{
                     override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>

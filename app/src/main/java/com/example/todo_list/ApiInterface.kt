@@ -121,9 +121,9 @@ public interface ApiInterface {
     @POST("/highdb/todo_ch")
     fun requestTodoCh(
         @Field("email") email: String,
-        @Field("category_title") ctg_title: String,
-        @Field("todo_date") todo_date: String,
-        @Field("todo_text") todo_text: String,
+        @Field("title") title: String,
+        @Field("text") text: String,
+        @Field("date") date: String,
         @Field("complete") complete: Int
     ) : Call<ServerResponse>
 
